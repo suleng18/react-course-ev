@@ -1,12 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
 const Input = () => {
   const divRef = useRef();
   const inputRef = useRef();
   useEffect(() => {
     // console.log(divRef.current);
-    // if (divRef.current) divRef.current.style.backgroundColor = "red";
-    // inputRef.current.focus();
+    // if (divRef.current) divRef.current.style.backgroundColor = 'red';
     if (inputRef.current) inputRef.current.focus();
   }, []);
   // console.log(divRef.current);

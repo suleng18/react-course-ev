@@ -1,32 +1,31 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const TextareaAutoResize = () => {
-  const [text, setText] = useState("demo");
+  const [text, setText] = useState('demo');
+  const [textHeight, setTextHeight] = useState('auto');
+  const [parentHeight, setParentHeight] = useState('auto');
   const textareaRef = useRef(null);
-  const [textareaHeight, setTextareaHeight] = useState("auto");
-  // const [parentHeight, setParentHeight] = useState("auto");
 
-  const handleChange = (event) => {
-    // setTextareaHeight(`${textareaRef?.current?.scrollHeight}px`);
-    setTextareaHeight("auto");
-    // setParentHeight(`${textareaRef?.current?.scrollHeight}px`);
-    setText(event.target.value);
+  const handleChange = (e) => {
+    setTextHeight('auto');
+    setParentHeight(`${textareaRef?.current?.scrollHeight}px`);
+    setText(e.target.value);
   };
 
-  useLayoutEffect(() => {
-    setTextareaHeight(`${textareaRef?.current?.scrollHeight}px`);
-    // setParentHeight(`${textareaRef?.current?.scrollHeight}px`);
+  useEffect(() => {
+    setTextHeight(`${textareaRef?.current?.scrollHeight}px`);
+    setParentHeight(`${textareaRef?.current?.scrollHeight}px`);
   }, [text]);
 
   return (
-    <div className="p-5">
+    <div className="p-5" style={{ minHeight: parentHeight }}>
       <textarea
-        className="transition-all overflow-hidden w-full max-w-[400px] p-5 rounded-lg border border-gray-300 focus:border-blue-400 resize-none leading-normal outline-none"
-        placeholder="Please enter your content..."
+        className="w-full overflow-hidden max-w-[400px] p-5 rounded-lg border focus:border-blue-500 border-gray-400 resize-none"
+        placeholder="Please your name "
         value={text}
         ref={textareaRef}
         style={{
-          height: textareaHeight,
+          height: textHeight,
         }}
         onChange={handleChange}
       ></textarea>

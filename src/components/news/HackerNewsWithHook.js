@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import useHackerNewsAPI from "../../hooks/useHackerNewsAPI";
+import React, { useState } from 'react';
+import useHackerNewsAPI from '../../hooks/useHackerNewsAPI';
 
 const HackerNewsWithHook = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const { loading, errorMessage, setUrl, data } = useHackerNewsAPI(
     `https://hn.algolia.com/api/v1/search?query=''`,
-    { hits: [] }
+    { hits: [] },
   );
+
   return (
     <div className="bg-white mx-auto mt-5 mb-5 p-5 rounded-lg shadow-md w-2/4">
       <div className="flex mb-5 gap-x-5">
@@ -18,9 +19,7 @@ const HackerNewsWithHook = () => {
           onChange={(e) => setQuery(e.target.value)}
         />
         <button
-          onClick={() =>
-            setUrl(`https://hn.algolia.com/api/v1/search?query=${query}`)
-          }
+          onClick={() => setUrl(`https://hn.algolia.com/api/v1/search?query=${query}`)}
           className="bg-blue-500 text-white font-semibold p-5 rounded-md flex-shrink-0"
         >
           Fetching
@@ -29,9 +28,7 @@ const HackerNewsWithHook = () => {
       {loading && (
         <div className="loading w-8 h-8 rounded-full border-blue-500 border-4 border-r-4 border-r-transparent animate-spin mx-auto my-10"></div>
       )}
-      {!loading && errorMessage && (
-        <p className="text-red-400 my-5">{errorMessage}</p>
-      )}
+      {!loading && errorMessage && <p className="text-red-400 my-5">{errorMessage}</p>}
       <div className="flex flex-wrap gap-5">
         {!loading &&
           data.hits.length > 0 &&

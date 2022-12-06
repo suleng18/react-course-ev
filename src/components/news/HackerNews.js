@@ -1,44 +1,66 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import lodash from 'lodash';
+import { createGlobalStyle } from 'styled-components';
 
 // https://hn.algolia.com/api/v1/search?query=react
 const HackerNews = () => {
   const [hits, setHits] = useState([]);
-  const [query, setQuery] = useState('react');
+  const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const handleFetchData = useRef({});
+  const [url, setUrl] = useState(`https://hn.algolia.com/api/v1/search?query=${query}`);
+  const isMounted = useRef(true);
 
   handleFetchData.current = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await axios.get(`https://hn.algolia.com/api/v1/search?query=${query}`);
-      setHits(response.data?.hits);
-      setLoading(false);
+      const response = await axios.get(url);
+      setTimeout(() => {
+        if (isMounted.current) {
+          setHits(response.data?.hits);
+          setLoading(false);
+        }
+      }, 3000);
     } catch (error) {
       setLoading(false);
       setErrorMessage(`The error ${error}`);
     }
   };
 
-  const handleUpdateQuery = lodash.debounce((e) => {
-    setQuery(e.target.value);
-  }, 400);
+  // const handleUpdateQuery = lodash.debounce((e) => {
+  //   setQuery(e.target.value);
+  // }, 400);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  });
 
   useEffect(() => {
     handleFetchData.current();
-  }, [query]);
+  }, [url]);
 
   return (
     <div className="bg-white mx-auto mt-5 p-5 rounded-lg shadow-md w-2/4">
-      <input
-        type="text"
-        className="border border-gray-200 text-black w-full p-5 mb-5 my-5 rounded-md focus:border-blue-400 transition-all"
-        defaultValue={query}
-        onChange={handleUpdateQuery}
-        placeholder="typing your keyword..."
-      />
+      <div className="flex gap-x-5 mb-5 my-5">
+        <input
+          type="text"
+          className="border border-gray-200 text-black w-full p-5  rounded-md focus:border-blue-400 transition-all"
+          defaultValue={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="typing your keyword..."
+        />
+
+        <button
+          onClick={() => setUrl(`https://hn.algolia.com/api/v1/search?query=${query}`)}
+          className="bg-blue-500 text-white font-semibold p-5 rounded-md flex-shrink-0"
+        >
+          Fetching
+        </button>
+      </div>
       {loading && (
         <div className="mx-auto my-10 loading w-8 h-8 rounded-full border-blue-500 border-4 border-r-4 border-r-transparent animate-spin"></div>
       )}
@@ -46,11 +68,14 @@ const HackerNews = () => {
       <div className="flex flex-wrap gap-5">
         {!loading &&
           hits.length > 0 &&
-          hits.map((item, index) => (
-            <h3 className="p-3 bg-gray-100 rounded-md" key={index}>
-              {item.title}
-            </h3>
-          ))}
+          hits.map((item, index) => {
+            if (!item.title || item.title.length <= 0) return;
+            return (
+              <h3 className="p-3 bg-gray-100 rounded-md" key={index}>
+                {item.title}
+              </h3>
+            );
+          })}
       </div>
     </div>
   );

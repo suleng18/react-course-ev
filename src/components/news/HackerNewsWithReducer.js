@@ -1,32 +1,34 @@
-import React, { useRef, useState } from "react";
-import axios from "axios";
+import React, { useRef, useState } from 'react';
+import axios from 'axios';
 
 const initialState = {
   hits: [],
-  query: "",
+  query: '',
   loading: true,
-  errorMessage: "",
+  errorMessage: '',
   url: "https://hn.algolia.com/api/v1/search?query=''",
 };
 
 const hackerNewsReducer = (state, action) => {
   switch (action.type) {
-    case "SET_DATA": {
+    case 'SET_DATA': {
       // const newState = JSON.parse(JSON.stringify(state));
       return { ...state, hits: action.payload };
     }
-    case "SET_LOADING": {
+
+    case 'SET_LOADING': {
       return { ...state, loading: action.payload };
     }
 
-    case "SET_ERROR": {
+    case 'SET_ERROR': {
       return { ...state, errorMessage: action.payload };
     }
 
-    case "SET_QUERY": {
+    case 'SET_QUERY': {
       return { ...state, query: action.payload };
     }
-    case "SET_URL": {
+
+    case 'SET_URL': {
       return { ...state, url: action.payload };
     }
 
@@ -41,33 +43,37 @@ const HackerNewsWithReducer = () => {
 
   handleFetchData.current = async () => {
     dispatch({
-      type: "SET_LOADING",
+      type: 'SET_LOADING',
       payload: true,
     });
+
     try {
       const response = await axios.get(state.url);
       dispatch({
-        type: "SET_DATA",
+        type: 'SET_DATA',
         payload: response.data?.hits || [],
       });
+
       dispatch({
-        type: "SET_LOADING",
+        type: 'SET_LOADING',
         payload: false,
       });
     } catch (error) {
       dispatch({
-        type: "SET_LOADING",
+        type: 'SET_LOADING',
         payload: false,
       });
       dispatch({
-        type: "SET_ERROR",
+        type: 'SET_ERROR',
         payload: `The error happend ${error}`,
       });
     }
   };
+
   React.useEffect(() => {
     handleFetchData.current();
   }, [state.url]);
+
   return (
     <div className="bg-white mx-auto mt-5 mb-5 p-5 rounded-lg shadow-md w-2/4">
       <div className="flex mb-5 gap-x-5">
@@ -78,7 +84,7 @@ const HackerNewsWithReducer = () => {
           defaultValue={state.query}
           onChange={(e) =>
             dispatch({
-              type: "SET_QUERY",
+              type: 'SET_QUERY',
               payload: e.target.value,
             })
           }
@@ -86,14 +92,14 @@ const HackerNewsWithReducer = () => {
         <button
           onClick={() =>
             dispatch({
-              type: "SET_URL",
+              type: 'SET_URL',
               payload: `https://hn.algolia.com/api/v1/search?query=${state.query}`,
             })
           }
           disabled={state.loading}
           className="bg-blue-500 text-white font-semibold p-5 rounded-md flex-shrink-0"
           style={{
-            opacity: state.loading ? "0.25" : "1",
+            opacity: state.loading ? '0.25' : '1',
           }}
         >
           Fetching
