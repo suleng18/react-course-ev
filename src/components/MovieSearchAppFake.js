@@ -1,42 +1,46 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import lodash from 'lodash';
 import useDebounce from '../hooks/useDebounce';
 import LoadingSkeleton from './loading/LoadingSkeleton';
-// https://api.themoviedb.org/3/movie/550?api_key=95f2419536f533cdaa1dadf83c606027
-// https://api.themoviedb.org/3/search/movie?api_key=95f2419536f533cdaa1dadf83c606027&query=''
-const MovieSearchApp = () => {
+
+// https://api.themoviedb.org/3/movie/550?api_key=c0745c88b05aaa1f08d6d21307bd6f34
+// https://api.themoviedb.org/3/search/movie?api_key=c0745c88b05aaa1f08d6d21307bd6f34&query=''
+const MovieSearchAppFake = () => {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState('');
   const queryDebounce = useDebounce(query, 500);
   const [loading, setLoading] = useState(true);
 
+  // const handleChangeQuery = lodash.debounce((e) => {
+  //   setQuery(e.target.value);
+  // }, 500);
+
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       setLoading(true);
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=95f2419536f533cdaa1dadf83c606027&query='${queryDebounce}'`,
+      const result = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=c0745c88b05aaa1f08d6d21307bd6f34&query='${queryDebounce}'`,
       );
-      if (response.data.results) {
-        setMovies(response.data.results);
+      const data = await result.data.results;
+
+      if (data) {
+        setMovies(data);
         setLoading(false);
       }
-    }
+    };
     fetchData();
   }, [queryDebounce]);
 
-  // const handleChange = e => {
-  //   setQuery(e.target.value);
-  // }
-  // lodash
   return (
     <div className="p-10">
       <div className="w-full max-w-[500px] mx-auto mb-20">
         <input
           type="text"
-          className="w-full p-5 rounded-lg border border-purple-500 shadow-[0px_0px_0px_3px_rgba(125,_106,_255,_0.2)]"
+          className="w-full p-5 rounded-lg border border-blue-500 shadow-[0px_0px_0px_3px_rgba(125,_106,_255,_0.2)]"
           placeholder="Search movie..."
           onChange={(e) => setQuery(e.target.value)}
-          // onChange={handleChange}
+          // onChange={handleChangeQuery}
         />
       </div>
       {loading && (
@@ -54,43 +58,26 @@ const MovieSearchApp = () => {
     </div>
   );
 };
-/**
- *
-adult: false
-backdrop_path: "/1dQOKOn4VhGPckO9S4yzOlKc12N.jpg"
-genre_ids: [53]
-id: 114785
-original_language: "fr"
-original_title: "Le Tigre aime la chair fraîche"
-overview: "A Turkish ambassador arrives in Paris to sign an important trade agreement, allowing Turkey to buy a sophisticated new war plane from France. Immediately he is the target of an assassin, and a special agent is assigned to protect him."
-popularity: 1.4
-poster_path: "/8rXOIQmdXMMXcDtvrs5O74BUICP.jpg"
-release_date: "1964-11-18"
-title: "Code Name: Tiger"
-video: false
-vote_average: 4.6
-vote_count: 4
-Image API: https://image.tmdb.org/t/p/original
- */
 
 const MovieItemLoading = () => {
   return (
-    <div className="bg-white p-3 rounded-2xl shadow-sm flex flex-col">
+    <div className="bg-white p-3 rounded-2xl shadow-md flex flex-col">
       <div className="h-[297px]">
-        <LoadingSkeleton width="100%" height="100%" radius="16px"></LoadingSkeleton>
+        <LoadingSkeleton width="100%" height={'100%'} radius={'16px'}></LoadingSkeleton>
       </div>
-      <div className="p-7 flex-1 flex flex-col">
-        <h3 className="text-lg text-black font-semibold mb-4">
-          <LoadingSkeleton height="20px"></LoadingSkeleton>
+      <div className="p-7 flex flex-1 flex-col">
+        <h3 className="text-xl font-semibold text-black mb-4">
+          <LoadingSkeleton height={'20px'}></LoadingSkeleton>
         </h3>
-        <p className="text-[#999] text-sm mb-6 !leading-loose">
-          <LoadingSkeleton height="10px"></LoadingSkeleton>
+        <p className="text-[#999] text-sm mb-6 !leading-loose text-">
+          <LoadingSkeleton height={'10px'}></LoadingSkeleton>
           <div className="h-2"></div>
-          <LoadingSkeleton height="10px"></LoadingSkeleton>
+          <LoadingSkeleton height={'10px'}></LoadingSkeleton>
           <div className="h-2"></div>
-          <LoadingSkeleton height="10px"></LoadingSkeleton>
+          <LoadingSkeleton height={'10px'}></LoadingSkeleton>
+          <div className="h-2"></div>
         </p>
-        <div className="flex items-center gap-x-3 mt-auto">
+        <div className="flex items-center gap-x-3 mt-auto ">
           <svg
             width="16"
             height="15"
@@ -105,7 +92,7 @@ const MovieItemLoading = () => {
             />
           </svg>
           <span className="text-sm font-semibold text-[#333]">
-            <LoadingSkeleton height="10px" width="50px"></LoadingSkeleton>
+            <LoadingSkeleton height={'20px'} width={'30px'}></LoadingSkeleton>
           </span>
         </div>
       </div>
@@ -115,18 +102,18 @@ const MovieItemLoading = () => {
 
 const MovieItem = ({ data }) => {
   return (
-    <div className="bg-white p-3 rounded-2xl shadow-sm flex flex-col">
+    <div className="bg-white p-3 rounded-2xl shadow-md flex flex-col">
       <div className="h-[297px]">
         <img
-          src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+          className="w-full h-full object-cover rounded-lg object-top"
+          src={`https://image.tmdb.org/t/p/original//${data.poster_path}`}
           alt=""
-          className="w-full h-full object-cover rounded-lg"
         />
       </div>
-      <div className="p-7 flex-1 flex flex-col">
-        <h3 className="text-lg text-black font-semibold mb-4">{data.title}</h3>
-        <p className="text-[#999] text-sm mb-6 !leading-loose">{data.overview}</p>
-        <div className="flex items-center gap-x-3 mt-auto">
+      <div className="p-7 flex flex-1 flex-col">
+        <h3 className="text-xl font-semibold text-black mb-4">{data.title}</h3>
+        <p className="text-[#999] text-sm mb-6 !leading-loose text-">{data.overview}</p>
+        <div className="flex items-center gap-x-3 mt-auto ">
           <svg
             width="16"
             height="15"
@@ -147,4 +134,4 @@ const MovieItem = ({ data }) => {
   );
 };
 
-export default MovieSearchApp;
+export default MovieSearchAppFake;
