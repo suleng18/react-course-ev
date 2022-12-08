@@ -1,39 +1,36 @@
-import React from "react";
-import { Formik, Form, useField } from "formik";
-import * as Yup from "yup";
+import React from 'react';
+import { Formik, Form, useField } from 'formik';
+import * as Yup from 'yup';
 
 const SignUpFormFinal = () => {
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        lastName: "",
-        email: "",
-        intro: "",
-        job: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        intro: '',
+        job: '',
         terms: false,
       }}
       validationSchema={Yup.object({
-        firstName: Yup.string().required("Required"),
-        lastName: Yup.string().required("Required"),
-        email: Yup.string().email().required("Required"),
-        intro: Yup.string().required("Required"),
-        job: Yup.string().required("Required"),
-        terms: Yup.boolean().oneOf(
-          [true],
-          "Please check the terms and conditions"
-        ),
+        firstName: Yup.string().required('Required'),
+        lastName: Yup.string().required('Required'),
+        email: Yup.string().email().required('Required'),
+        intro: Yup.string().required('Required'),
+        job: Yup.string().required('Required'),
+        terms: Yup.boolean().oneOf([true], 'Please check the terms and conditions'),
       })}
       onSubmit={(values, actions) => {
         // console.log("SignUpFormFinal ~ actions", actions);
         // console.log(values);
         setTimeout(() => {
           actions.resetForm({
-            firstName: "",
-            lastName: "",
-            email: "",
-            intro: "",
-            job: "",
+            firstName: '',
+            lastName: '',
+            email: '',
+            intro: '',
+            job: '',
             terms: false,
           });
           actions.setSubmitting(false);
@@ -43,10 +40,7 @@ const SignUpFormFinal = () => {
       {(formik) => {
         console.log(formik);
         return (
-          <Form
-            className="p-10 w-full max-w-[500px] mx-auto"
-            autoComplete="off"
-          >
+          <Form className="p-10 w-full max-w-[500px] mx-auto" autoComplete="off">
             <MyInput
               label="First name"
               name="firstName"
@@ -106,15 +100,8 @@ const MyInput = ({ label, ...props }) => {
   return (
     <div className="flex flex-col gap-2 mb-5">
       <label htmlFor={props.id || props.name}>{label}</label>
-      <input
-        type="text"
-        className="p-4 rounded-md border border-gray-100"
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? (
-        <div className="text-sm text-red-500">{meta.error}</div>
-      ) : null}
+      <input type="text" className="p-4 rounded-md border border-gray-100" {...field} {...props} />
+      {meta.touched && meta.error ? <div className="text-sm text-red-500">{meta.error}</div> : null}
     </div>
   );
 };
@@ -130,9 +117,7 @@ const MyTextarea = ({ label, ...props }) => {
         {...field}
         {...props}
       />
-      {meta.touched && meta.error ? (
-        <div className="text-sm text-red-500">{meta.error}</div>
-      ) : null}
+      {meta.touched && meta.error ? <div className="text-sm text-red-500">{meta.error}</div> : null}
     </div>
   );
 };
@@ -141,14 +126,8 @@ const MySelectBox = ({ label, ...props }) => {
   return (
     <div className="flex flex-col gap-2 mb-5">
       <label htmlFor={props.id || props.name}>{label}</label>
-      <select
-        className="p-4 rounded-md border border-gray-100"
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? (
-        <div className="text-sm text-red-500">{meta.error}</div>
-      ) : null}
+      <select className="p-4 rounded-md border border-gray-100" {...field} {...props} />
+      {meta.touched && meta.error ? <div className="text-sm text-red-500">{meta.error}</div> : null}
     </div>
   );
 };
@@ -160,9 +139,7 @@ const MyCheckbox = ({ children, ...props }) => {
         <input type="checkbox" {...field} {...props} />
         {children}
       </label>
-      {meta.touched && meta.error ? (
-        <div className="text-sm text-red-500">{meta.error}</div>
-      ) : null}
+      {meta.touched && meta.error ? <div className="text-sm text-red-500">{meta.error}</div> : null}
     </div>
   );
 };

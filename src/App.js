@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.scss';
-import Form from './components/form/Form';
-import MovieSearchApp from './components/MovieSearchApp';
+import SignUpFormFinalcopy from './components/form/SignUpFormFinalcopy';
 
 function App() {
   return (
     <div>
-      <MovieSearchApp></MovieSearchApp>
+      <SignUpFormFinalcopy></SignUpFormFinalcopy>
     </div>
   );
 }
