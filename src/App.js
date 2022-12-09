@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.scss';
-import SignUpFormFinalcopy from './components/form/SignUpFormFinalcopy';
+import SignUpFormHookcopy from './components/form/SignUpFormHookcopy';
 
 function App() {
   return (
     <div>
-      <SignUpFormFinalcopy></SignUpFormFinalcopy>
+      <SignUpFormHookcopy></SignUpFormHookcopy>
     </div>
   );
 }

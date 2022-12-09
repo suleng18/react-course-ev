@@ -1,20 +1,22 @@
 import { Form, Formik, useField } from 'formik';
 import React from 'react';
+import * as Yup from 'yup';
 
 const SignUpFormFinalcopy = () => {
   return (
     <Formik
       initialValues={{ firstName: '', lastName: '', email: '', intro: '', terms: false }}
-      // validationSchema={Yup.object({
-      //   firstName: Yup.string().max(20, 'Too Long!').required('Required'),
-      //   lastName: Yup.string().max(20, 'Too Long!').required('Required'),
-      //   email: Yup.string().email().required('Required'),
-      //   job: Yup.string().required('Required'),
-      //   intro: Yup.string().required('Required'),
-      //   terms: Yup.boolean().oneOf([true], 'Please check the terms and conditions'),
-      // })}
+      validationSchema={Yup.object({
+        firstName: Yup.string().max(20, 'Too Long!').required('Required'),
+        lastName: Yup.string().max(20, 'Too Long!').required('Required'),
+        email: Yup.string().email().required('Required'),
+        job: Yup.string().required('Required'),
+        intro: Yup.string().required('Required'),
+        terms: Yup.boolean().oneOf([true], 'Please check the terms and conditions'),
+      })}
       onSubmit={(values, actions) => {
         setTimeout(() => {
+          actions.resetForm({ firstName: '', lastName: '', email: '', intro: '', terms: false });
           actions.setSubmitting(false);
         }, 4000);
       }}

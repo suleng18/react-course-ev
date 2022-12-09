@@ -1,6 +1,6 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 // const validate = (values) => {
 //   const errors = {};
@@ -22,22 +22,19 @@ import * as Yup from "yup";
 const SignUpForm = () => {
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      firstName: '',
+      lastName: '',
     },
     validationSchema: Yup.object({
-      firstName: Yup.string()
-        .max(20, "Must be 20 characters or less")
-        .required("Required"),
-      lastName: Yup.string()
-        .max(10, "Must be 10 characters or less")
-        .required("Required"),
+      firstName: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+      lastName: Yup.string().max(10, 'Must be 10 characters or less').required('Required'),
     }),
     onSubmit: (values) => {
       console.log(values);
     },
   });
-  console.log("SignUpForm ~ formik", formik);
+
+  console.log('SignUpForm ~ formik', formik);
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -51,7 +48,7 @@ const SignUpForm = () => {
           id="firstName"
           placeholder="Enter your first name"
           className="p-4 rounded-md border border-gray-100"
-          {...formik.getFieldProps("firstName")}
+          {...formik.getFieldProps('firstName')}
         />
         {formik.touched.firstName && formik.errors.firstName ? (
           <div className="text-sm text-red-500">{formik.errors.firstName}</div>
@@ -64,7 +61,7 @@ const SignUpForm = () => {
           id="lastName"
           placeholder="Enter your first name"
           className="p-4 rounded-md border border-gray-100"
-          {...formik.getFieldProps("lastName")}
+          {...formik.getFieldProps('lastName')}
           // name="lastName"
           // onChange={formik.handleChange}
           // onBlur={formik.handleBlur}
