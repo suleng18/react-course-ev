@@ -2,9 +2,9 @@
 // 2. Component này có props children, props text
 // 3. Áp dụng portal để khi rê chuột vào text thì sẽ hiển thị tooltip content ở phía trên, và chính giữa đoạn text
 // 4. Dùng kiến thức đã học ở video trước sử dụng getBoundingClientRect()
-import React, { useState } from "react";
-import useHover from "../../hooks/useHover";
-import ReactDOM from "react-dom";
+import React, { useState } from 'react';
+import useHover from '../../hooks/useHover';
+import ReactDOM from 'react-dom';
 
 const Tooltip = ({ children, text }) => {
   const { hovered, nodeRef } = useHover();
@@ -22,20 +22,21 @@ const Tooltip = ({ children, text }) => {
   );
 };
 
-function TooltipContent({ children, coords }) {
-  console.log("TooltipContent ~ coords", coords);
+const TooltipContent = ({ children, coords }) => {
+  console.log('🚀 ~ coords', coords);
   return ReactDOM.createPortal(
     <p
-      className="p-3 bg-black text-white rounded-xl inline-block absolute -translate-y-full max-w-[200px] -translate-x-2/4"
+      className="absolute inline-block p-3 text-white -translate-y-full bg-black rounded-xl max-w-[200px]"
       style={{
-        top: coords.top - coords.height / 2 + window.scrollY,
-        left: coords.left + coords.width / 2,
+        top: coords.top - coords.height / 2,
+        left: coords.left,
       }}
     >
       {children}
     </p>,
-    document.querySelector("body")
+    document.querySelector('body'),
   );
-}
+};
 
 export default Tooltip;
+// 177

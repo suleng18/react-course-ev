@@ -328,7 +328,7 @@
 - Conditional Types: Extends
 - Utility Types: Pick, Omit, Partial, Record
 - As
-- Sử dụng Typescript với React component -->
+- Sử dụng Typescript với React component
 
 # Chương 17: React Performance
 
@@ -341,4 +341,4 @@
 - Cách viết code react để có hiệu suất tốt nhất
 - Tối ưu React Context bạn đã biết chưa
 - Tất tần tật về useEffect
-- Xử lý dữ liệu lớn với react-virtual
+- Xử lý dữ liệu lớn với react-virtual -->

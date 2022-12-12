@@ -1,24 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-// createPortal
 const Modal = ({ open = false, handleClose = () => {} }) => {
-  if (typeof document === "undefined") return <div className="modal"></div>;
+  if (typeof window === 'undefined') return <div className="modal"></div>;
   return ReactDOM.createPortal(
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-5 modal ${
-        open ? "" : "opacity-0 invisible"
+      className={`fixed inset-0 z-50 flex items-center justify-center  p-5  modal ${
+        open ? '' : 'invisible opacity-0'
       }`}
     >
-      <div
-        className="absolute inset-0 bg-black bg-opacity-25 overlay"
-        onClick={handleClose}
-      ></div>
-      <div className="relative z-10 w-full p-10 bg-white rounded-lg modal-content max-w-[482px]">
+      <div className="absolute inset-0 bg-black bg-opacity-25 overlay" onClick={handleClose}></div>
+      <div className="relative modal-content bg-white z-10 p-10 rounded-lg w-full max-w-[482px]">
         <span
-          className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 p-1 bg-white rounded-full cursor-pointer -translate-y-2/4 translate-x-2/4"
           onClick={handleClose}
+          className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 p-1 bg-white rounded-full cursor-pointer -translate-y-2/4 translate-x-2/4"
         >
           <svg
             width="14"
@@ -33,11 +28,9 @@ const Modal = ({ open = false, handleClose = () => {} }) => {
             />
           </svg>
         </span>
-        <h2 className="mb-5 text-4xl font-medium text-center text-black">
-          Welcome Back!
-        </h2>
+        <h2 className="text-4xl font-medium text-center text-black">Welcome back</h2>
         <div className="flex flex-col gap-3 mb-5">
-          <label htmlFor="email" className="text-sm cursor-pointer">
+          <label htmlFor="email" className="text-sm cursor-pointer ">
             Email address
           </label>
           <input
@@ -47,7 +40,7 @@ const Modal = ({ open = false, handleClose = () => {} }) => {
           />
         </div>
         <div className="flex flex-col gap-3 mb-5">
-          <label htmlFor="password" className="text-sm cursor-pointer">
+          <label htmlFor="password" className="text-sm cursor-pointer ">
             Password
           </label>
           <input
@@ -61,11 +54,8 @@ const Modal = ({ open = false, handleClose = () => {} }) => {
         </button>
       </div>
     </div>,
-    document.querySelector("body")
+    document.querySelector('body'),
   );
 };
-Modal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
-};
+
 export default Modal;
