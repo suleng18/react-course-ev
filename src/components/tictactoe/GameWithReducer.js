@@ -1,7 +1,7 @@
-import React, { useReducer, useState } from "react";
-import { calculateWinner } from "../../helpers";
-import Board from "./Board";
-import "./GameStyles.css";
+import React, { useReducer, useState } from 'react';
+import { calculateWinner } from '../../helpers';
+import Board from './Board';
+import './GameStyles.css';
 
 // const obj1 = {
 //   name: 'evondev'
@@ -20,18 +20,18 @@ const initialState = {
 // deep copy JSON.parse(JSON.stringify(obj))
 const gameReducer = (state, action) => {
   switch (action.type) {
-    case "CLICK": {
+    case 'CLICK': {
       const { board, xIsNext } = state;
       const { index, winner } = action.payload;
       if (winner || board[index]) return state;
       const nextState = JSON.parse(JSON.stringify(state));
       // board[index] = state.xIsNext ? "X" : "O";
-      nextState.board[index] = xIsNext ? "X" : "O";
+      nextState.board[index] = xIsNext ? 'X' : 'O';
       nextState.xIsNext = !xIsNext;
       console.log(state);
       return nextState;
     }
-    case "RESET": {
+    case 'RESET': {
       const nextState = JSON.parse(JSON.stringify(state));
       nextState.board = Array(9).fill(null);
       nextState.xIsNext = true;
@@ -39,7 +39,7 @@ const gameReducer = (state, action) => {
     }
 
     default:
-      console.log("Error");
+      console.log('Error');
       break;
   }
   return state;
@@ -54,7 +54,7 @@ const GameWithReducer = () => {
   const winner = calculateWinner(state.board);
   const handleClick = (index) => {
     dispatch({
-      type: "CLICK",
+      type: 'CLICK',
       payload: {
         index,
         winner,
@@ -63,7 +63,7 @@ const GameWithReducer = () => {
   };
   const handleResetGame = () => {
     dispatch({
-      type: "RESET",
+      type: 'RESET',
     });
   };
   return (

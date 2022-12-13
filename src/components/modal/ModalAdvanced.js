@@ -1,12 +1,12 @@
-import React from "react";
-import ModalBase from "./ModalBase";
+import React from 'react';
+import ModalBase from './ModalBase';
 
 const ModalAdvanced = ({ children, heading, ...props }) => {
   return (
     <ModalBase {...props}>
       <span
-        className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 p-1 bg-white rounded-full cursor-pointer -translate-y-2/4 translate-x-2/4"
         onClick={props.onClose}
+        className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 p-1 bg-white rounded-full cursor-pointer -translate-y-2/4 translate-x-2/4"
       >
         <svg
           width="14"
@@ -21,9 +21,7 @@ const ModalAdvanced = ({ children, heading, ...props }) => {
           />
         </svg>
       </span>
-      <h2 className="mb-5 text-4xl font-medium text-center text-black">
-        {heading}
-      </h2>
+      <h2 className="mb-5 text-4xl font-medium text-center text-black">{heading}</h2>
       {children}
     </ModalBase>
   );

@@ -26,10 +26,10 @@ const TooltipContent = ({ children, coords }) => {
   console.log('🚀 ~ coords', coords);
   return ReactDOM.createPortal(
     <p
-      className="absolute inline-block p-3 text-white -translate-y-full bg-black rounded-xl max-w-[200px]"
+      className="absolute inline-block p-3 text-white -translate-y-full -translate-x-2/4 bg-black rounded-xl max-w-[200px]"
       style={{
-        top: coords.top - coords.height / 2,
-        left: coords.left,
+        top: `${coords.top - coords.height / 2 + window.screenY}px`,
+        left: `${coords.left + coords.width / 2}px`,
       }}
     >
       {children}
