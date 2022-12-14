@@ -1,23 +1,24 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.scss';
-import CartList from './components/gallery/CartList';
-import PhotoList from './components/gallery/PhotoList';
-import HeaderMain from './components/HeaderMain';
-import { AuthProvider } from './contexts/auth-context';
-import { useCount } from './contexts/countContext';
-import { GalleryProvider } from './contexts/gallery-context copy';
+import BlogPage from './components/BlogPage';
+import BlogPageDetails from './components/BlogPageDetails';
+import Nav from './components/Nav';
+import ProfilePage from './components/ProfilePage';
 
 function App() {
   return (
-    <Fragment>
-      <AuthProvider>
-        <GalleryProvider>
-          <HeaderMain></HeaderMain>
-          <PhotoList></PhotoList>
-          <CartList></CartList>
-        </GalleryProvider>
-      </AuthProvider>
-    </Fragment>
+    <div>
+      <Routes>
+        <Route path="/" element={<Nav></Nav>}>
+          <Route path="/" element={<>HomePage</>}></Route>
+          <Route path="/blog" element={<BlogPage></BlogPage>}></Route>
+          <Route path="/blog/:slug" element={<BlogPageDetails></BlogPageDetails>}></Route>
+          <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
+        </Route>
+        <Route path="*" element={<>This is 404 page</>}></Route>
+      </Routes>
+    </div>
   );
 }
 
