@@ -1,20 +1,25 @@
-import React, { useState } from "react";
-// lifting state
+import React from 'react';
+import { useState } from 'react';
+
 const HandleValue = () => {
-  return <Input>{(value) => <DisplayValue value={value} />}</Input>;
+  return (
+    <div className="handle-value">
+      <Input>{(value) => <DisplayValue value={value}></DisplayValue>}</Input>
+    </div>
+  );
 };
 
 const Input = (props) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
+
   return (
     <>
       <input
-        className="p-3 rounded-md border border-gray-500 w-full max-w-[500px]"
+        className="border p-3 rounded-md border-gray-500"
         type="text"
-        value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      {typeof props.children === "function" ? props.children(value) : null}
+      {props.children(value)}
     </>
   );
 };
@@ -22,5 +27,4 @@ const Input = (props) => {
 const DisplayValue = ({ value }) => {
   return <span className="text-3xl text-blue-500 font-bold">{value}</span>;
 };
-
 export default HandleValue;

@@ -1,18 +1,13 @@
-import React, { useState } from "react";
-import useToggle from "./useToggle";
-// Duplicate code
+import React, { useState } from 'react';
+import useToogle from './useToggle';
+
 const Editable = () => {
-  // const [edit, setEdit] = useState(false);
-  // const handleToggleEdit = () => {
-  //   setEdit((edit) => !edit);
-  // };
-  const { value: edit, handleToggleValue: handleToggleEdit } = useToggle();
+  const { value: edit, handleToggleValue } = useToogle();
+
   return (
     <div>
-      {edit && (
-        <input type="text" className="p-3 rounded-lg border border-gray-200" />
-      )}
-      <button onClick={handleToggleEdit}>Open edit</button>
+      {edit && <input className="p-3 rounded-lg border border-gray-500" type="text" />}
+      <button onClick={handleToggleValue}>Open Edit</button>
     </div>
   );
 };

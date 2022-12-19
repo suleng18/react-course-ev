@@ -1,13 +1,12 @@
-import * as React from "react";
+import { useEffect, useState } from 'react';
 
 function withLoading(Component, url) {
   return (props) => {
-    const [news, setNews] = React.useState([]);
-    React.useEffect(() => {
+    const [news, setNews] = useState([]);
+    useEffect(() => {
       async function fetchData() {
         const response = await fetch(url);
         const data = await response.json();
-        console.log("fetchData ~ data", data);
         setNews(data.hits);
       }
       fetchData();
@@ -16,6 +15,5 @@ function withLoading(Component, url) {
     return <Component data={news} {...props}></Component>;
   };
 }
+
 export default withLoading;
-// High order function: map, filter, some, every, reduce
-// [1,2,3].map((item, array) => {})

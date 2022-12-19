@@ -1,21 +1,18 @@
-import React from "react";
-import { AccordionProvider } from "./accordion-context";
-import AccordionContent from "./AccordionContent";
-import AccordionHeader from "./AccordionHeader";
-// import useToggle from "./useToggle";
-// Specialized component
-// Container component
-// Compound component
-// props drilling
-const Accordion = ({ header, children }) => {
+import React from 'react';
+import useToogle from './useToggle';
+
+const Accordion = () => {
+  const { value: show, handleToggleValue } = useToogle();
   return (
-    <AccordionProvider>
-      <div className="mb-5">
-        <AccordionHeader>{header}</AccordionHeader>
-        <AccordionContent>{children}</AccordionContent>
+    <>
+      <div className="header cursor-pointer" onClick={handleToggleValue}>
+        Accordion header
+        <span>+</span>
       </div>
-    </AccordionProvider>
+      {show && <div className="content">Accordion content</div>}
+    </>
   );
 };
+// 244
 
 export default Accordion;
