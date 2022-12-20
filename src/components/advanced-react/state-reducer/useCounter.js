@@ -1,11 +1,11 @@
-import { useReducer } from "react";
+import { useReducer } from 'react';
 const counterReducer = ({ count }, { type }) => {
   switch (type) {
-    case "increment":
+    case 'increment':
       return {
         count: count + 1,
       };
-    case "decrement":
+    case 'decrement':
       return {
         count: count - 1,
       };
@@ -13,16 +13,14 @@ const counterReducer = ({ count }, { type }) => {
       throw new Error(`Unhandled action type ${type}`);
   }
 };
-export default function useCounter(
-  { initial = 0 } = {},
-  reducer = counterReducer
-) {
+
+export default function useCounter({ initial = 0 } = {}, reducer = counterReducer) {
   const [{ count }, dispatch] = useReducer(reducer, { count: initial });
   const handleIncrement = () => {
-    dispatch({ type: "increment" });
+    dispatch({ type: 'increment' });
   };
   const handleDecrement = () => {
-    dispatch({ type: "decrement" });
+    dispatch({ type: 'decrement' });
   };
   return {
     count,
@@ -30,4 +28,5 @@ export default function useCounter(
     handleDecrement,
   };
 }
+
 useCounter.reducer = counterReducer;

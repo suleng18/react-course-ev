@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from 'react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -6,130 +6,117 @@ import {
   getAuth,
   onAuthStateChanged,
   updateProfile,
-} from "firebase/auth";
-import { auth, db } from "./firebase-config";
-import { addDoc, collection } from "firebase/firestore";
-import { useEffect } from "react";
+} from 'firebase/auth';
+import { useState } from 'react';
+import { auth, db } from './firebase-config';
+import { addDoc, collection } from 'firebase/firestore';
 
 const FirebaseAuth = () => {
   const [values, setValues] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
-  const [userInfo, setUserInfo] = useState("");
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUserInfo(currentUser);
-      } else {
-        setUserInfo("");
-      }
-    });
-  }, []);
+  const [userInfo, setUserInfo] = useState('');
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUserInfo(currentUser);
+  });
+
   const handleInputChange = (e) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleCreateUser = async (e) => {
     e.preventDefault();
     try {
-      // credentials
-      const cred = await createUserWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password
-      );
+      const cred = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      console.log('🚀 ~ cred', cred);
 
       await updateProfile(auth.currentUser, {
-        displayName: "Tran Anh Tuan",
+        displayName: 'Xuan Long',
       });
       setUserInfo(cred);
-      console.log("Success!!");
-      const userRef = collection(db, "users");
+      console.log('Successfully created user');
+
+      const userRef = collection(db, 'users');
       await addDoc(userRef, {
         email: values.email,
         password: values.password,
         id: cred.user.uid,
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
-
-    // console.log("handleCreateUser ~ updatedUser", updatedUser);
-
-    // console.log("handleCreateUser ~ user", user);
-    // if (user) setUserInfo(user);
-    // console.log("Create user successfully");
   };
+
   const handleSignOut = () => {
     signOut(auth);
   };
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    const cred = await signInWithEmailAndPassword(
-      auth,
-      values.email,
-      values.password
-    );
+    const cred = await signInWithEmailAndPassword(auth, values.email, values.password);
     setUserInfo(cred);
-    console.log("Login successfully!");
+    console.log('Login successfuly');
   };
+
   return (
     <>
-      <div className="w-full max-w-[500px] mx-auto bg-white shadow-lg p-5 mb-10">
+      <div className="w-full max-w-[500px] mx-auto bg-slate-100 shadow-lg p-5 mb-10">
         <form onSubmit={handleCreateUser}>
           <input
             type="email"
-            className="w-full p-3 mb-5 border border-gray-200 rounded outline-none focus:border-blue-500"
+            className="p-3 rounded border border-gray-200 w-full mb-5 outline-none focus:border-blue-400"
+            placeholder="Enter your email"
             name="email"
             onChange={handleInputChange}
-            placeholder="Enter your email address"
           />
           <input
             type="password"
-            className="w-full p-3 mb-5 border border-gray-200 rounded outline-none focus:border-blue-500"
+            className="p-3 rounded border border-gray-200 w-full mb-5 outline-none focus:border-blue-400"
+            placeholder="Enter your password"
             name="password"
             onChange={handleInputChange}
-            placeholder="Enter your password"
           />
           <button
+            className="p-3 bg-blue-500 text-sm  text-white font-medium rounded-lg w-full"
             type="submit"
-            className="w-full p-3 text-sm font-medium text-white bg-blue-500 rounded-lg"
           >
             SignUp
           </button>
         </form>
-        <div className="flex items-center mt-10 gap-x-5">
+        <div className="mt-10 flex items-center gap-x-5">
           <span>{userInfo?.displayName}</span>
           <button
-            className="p-3 text-sm font-medium text-white bg-purple-500 rounded-lg"
+            className="p-3 bg-blue-500 text-sm  text-white font-medium rounded-lg"
             onClick={handleSignOut}
           >
             SignOut
           </button>
         </div>
       </div>
-      <div className="w-full max-w-[500px] mx-auto bg-white shadow-lg p-5 mb-10">
+      <div className="w-full max-w-[500px] mx-auto bg-slate-100 shadow-lg p-5 mb-10">
         <form onSubmit={handleLogin}>
           <input
             type="email"
-            className="w-full p-3 mb-5 border border-gray-200 rounded outline-none focus:border-blue-500"
+            className="p-3 rounded border border-gray-200 w-full mb-5 outline-none focus:border-blue-400"
+            placeholder="Enter your email"
             name="email"
             onChange={handleInputChange}
-            placeholder="Enter your email address"
           />
           <input
             type="password"
-            className="w-full p-3 mb-5 border border-gray-200 rounded outline-none focus:border-blue-500"
+            className="p-3 rounded border border-gray-200 w-full mb-5 outline-none focus:border-blue-400"
+            placeholder="Enter your password"
             name="password"
             onChange={handleInputChange}
-            placeholder="Enter your password"
           />
           <button
+            className="p-3 bg-red-400 text-sm  text-white font-medium rounded-lg w-full"
             type="submit"
-            className="w-full p-3 text-sm font-medium text-white bg-pink-500 rounded-lg"
           >
             Login
           </button>

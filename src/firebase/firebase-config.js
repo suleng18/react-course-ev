@@ -1,18 +1,19 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-// Change your config below
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
+  apiKey: 'AIzaSyD5gq7oM2x5yMOZKnoYbQBeU_xH_rowPRo',
+  authDomain: 'learn-firebase-574ae.firebaseapp.com',
+  projectId: 'learn-firebase-574ae',
+  storageBucket: 'learn-firebase-574ae.appspot.com',
+  messagingSenderId: '104637913050',
+  appId: '1:104637913050:web:43162347b0bd91fdbe52e3',
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// Init services
-export const db = getFirestore(app);
-export const auth = getAuth(app);
+
+// Init service
+export const db = getFirestore();
+export const auth = getAuth();

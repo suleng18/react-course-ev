@@ -1,5 +1,5 @@
-import React from "react";
-import { useCount } from "./count-context";
+import React from 'react';
+import { useCount } from './count-context';
 
 const Decrement = () => {
   const { handleDecrement } = useCount();

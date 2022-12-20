@@ -1,15 +1,12 @@
 import React from 'react';
-import './App.scss';
-import Accordion from './components/advanced-react/react-composition-compound-component/Accordion';
-import Editable from './components/advanced-react/react-composition-compound-component/Editable';
+import FirebaseAuth from './firebase/FirebaseAuth';
 
-function App() {
+const App = () => {
   return (
-    <div className="app">
-      <Accordion></Accordion>
-      <Editable></Editable>
+    <div>
+      <FirebaseAuth></FirebaseAuth>
     </div>
   );
-}
+};
 
 export default App;
